@@ -1,25 +1,72 @@
 #include "keyboardreceiver.h"
 
-KeyboardReceiver::KeyboardReceiver(QObject *parent) : QObject(parent)
+namespace Base {
+
+KeyboardReceiver::KeyboardReceiver()
 {
 
 }
 
 void KeyboardReceiver::readKeys()
 {
-    if (RegisterHotKey(NULL,1, MOD_CONTROL | MOD_SHIFT, 0x4c))  //0x42 is 'b'
-        {
-            std::cout<<"eingerichtet"<<std::endl;
-        }
+    // key p
+ if (RegisterHotKey(NULL, 1, MOD_CONTROL | MOD_ALT, 0x50)) {
+     #ifdef DEBUGG
+         std::cout << "eingerichtet" << std::endl;
+     #endif
+ }
+ //Key b
+ if (RegisterHotKey(NULL, 2, MOD_CONTROL | MOD_ALT, 0x42)) {
+     #ifdef DEBUGG
+         std::cout << "eingerichtet" << std::endl;
+     #endif
+ }
+ //key n
+ if (RegisterHotKey(NULL, 3, MOD_CONTROL | MOD_ALT, 0x4e)) {
+     #ifdef DEBUGG
+         std::cout << "eingerichtet" << std::endl;
+     #endif
+ }
+ //key v
+ if (RegisterHotKey(NULL, 4, MOD_CONTROL | MOD_ALT, 0x56)) {
+     #ifdef DEBUGG
+         std::cout << "eingerichtet" << std::endl;
+     #endif
+ }
 
-        MSG msg = {0};
-        while (GetMessage(&msg, NULL, 0, 0) != 0)
-        {
-            if (msg.message == WM_HOTKEY)
-            {
-                std::cout<<"tasten wurden gedrückt"<<std::endl;
-            }
-        }
+ MSG msg = { 0 };
+ while (GetMessage(&msg, NULL, 0, 0) != 0) {
+   if (msg.message == WM_HOTKEY) {
 
-    UnregisterHotKey(NULL, 1);
+     switch (msg.wParam) {
+       case 1:
+         Base::KeySimulator::PlayPause();
+         break;
+       case 2:
+         Base::KeySimulator::Stop();
+         break;
+       case 3:
+         Base::KeySimulator::nextTrack();
+         break;
+       case 4:
+         Base::KeySimulator::prevTrack();
+         break;
+     }
+
+#ifdef DEBUGG
+        std::cout << "tasten wurden gedrueckt" << std::endl;
+#endif
+   }
+ }
+
+ UnregisterHotKey(NULL, 1);
+}
+
+void KeyboardReceiver::end() {
+  UnregisterHotKey(NULL, 1);
+  UnregisterHotKey(NULL, 2);
+  UnregisterHotKey(NULL, 3);
+  UnregisterHotKey(NULL, 4);
+}
+//end of Base
 }

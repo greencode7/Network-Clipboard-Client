@@ -1,20 +1,19 @@
 #ifndef KEYBOARDRECEIVER_H
 #define KEYBOARDRECEIVER_H
 
-#include <QObject>
 #include <windows.h>
 #include <iostream>
+#include "KeySimulator.h"
 
-class KeyboardReceiver : public QObject
+namespace Base {
+class KeyboardReceiver
 {
-    Q_OBJECT
 public:
-    explicit KeyboardReceiver(QObject *parent = 0);
+    KeyboardReceiver();
     void readKeys();
-
-signals:
-
-public slots:
+    void end();
 };
+
+}
 
 #endif // KEYBOARDRECEIVER_H

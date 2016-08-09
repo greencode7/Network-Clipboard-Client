@@ -5,7 +5,8 @@ CONFIG += c++11
 
 SOURCES += main.cpp \
     KeySimulator.cpp \
-    keyboardreceiver.cpp
+    keyboardreceiver.cpp \
+    clipboardcontroller.cpp
 
 RESOURCES += qml.qrc
 
@@ -17,4 +18,5 @@ include(deployment.pri)
 
 HEADERS += \
     KeySimulator.h \
-    keyboardreceiver.h
+    keyboardreceiver.h \
+    clipboardcontroller.h
